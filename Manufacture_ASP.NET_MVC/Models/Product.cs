@@ -24,5 +24,6 @@ namespace KP_MANUFACTURE_MVC.Models
 
         public virtual List<Manufacture> Manufactures { get; set; }
         public virtual List<Product_Raw> Product_Raws { get; set; }
+        public virtual List<Export> Exports { get; set; }
     }
 }

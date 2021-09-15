@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Manufacture_ASP.NET_MVC.Data;
 
 namespace Manufacture_ASP.NET_MVC
 {
@@ -23,6 +25,9 @@ namespace Manufacture_ASP.NET_MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<ManufactureContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ManufactureContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +51,7 @@ namespace Manufacture_ASP.NET_MVC
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Manufacture}/{action=Index}/{id?}");
             });
         }
     }
