@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 namespace KP_MANUFACTURE_MVC.Models
 {
+    
     public class Product_Raw
     {
         public int Id { get; set; }

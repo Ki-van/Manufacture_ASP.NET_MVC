@@ -49,8 +49,8 @@ namespace Manufacture_ASP.NET_MVC.Controllers
         // GET: Product_Raw/Create
         public IActionResult Create()
         {
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id");
-            ViewData["RawId"] = new SelectList(_context.Raw, "Id", "Id");
+            ViewData["ProductName"] = new SelectList(_context.Product, "Name", "Name");
+            ViewData["RawName"] = new SelectList(_context.Raw, "Name", "Name");
             return View();
         }
 
@@ -59,16 +59,21 @@ namespace Manufacture_ASP.NET_MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CostRate,Lost,ProductId,RawId")] Product_Raw product_Raw)
+        public async Task<IActionResult> Create([Bind("Id,CostRate,Lost")] Product_Raw product_Raw, string Product, string Raw)
         {
+            Product product = _context.Product.Where(p => p.Name == Product).First();
+            Raw raw = _context.Raw.Where(p => p.Name == Raw).First();
+            product_Raw.ProductId = product.Id;
+            product_Raw.RawId = raw.Id;
+
             if (ModelState.IsValid)
             {
                 _context.Add(product_Raw);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", product_Raw.ProductId);
-            ViewData["RawId"] = new SelectList(_context.Raw, "Id", "Id", product_Raw.RawId);
+            ViewData["ProductName"] = new SelectList(_context.Product, "Name", "Name", product.Name);
+            ViewData["RawName"] = new SelectList(_context.Raw, "Name", "Name", raw.Name);
             return View(product_Raw);
         }
 
@@ -85,8 +90,9 @@ namespace Manufacture_ASP.NET_MVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", product_Raw.ProductId);
-            ViewData["RawId"] = new SelectList(_context.Raw, "Id", "Id", product_Raw.RawId);
+
+            ViewData["ProductName"] = new SelectList(_context.Product, "Name", "Name", _context.Product.Find(product_Raw.ProductId).Name);
+            ViewData["RawName"] = new SelectList(_context.Raw, "Name", "Name", _context.Raw.Find(product_Raw.RawId).Name);
             return View(product_Raw);
         }
 
@@ -95,8 +101,13 @@ namespace Manufacture_ASP.NET_MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CostRate,Lost,ProductId,RawId")] Product_Raw product_Raw)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CostRate,Lost")] Product_Raw product_Raw, string Product, string Raw)
         {
+            Product product = _context.Product.Where(p => p.Name == Product).First();
+            Raw raw = _context.Raw.Where(p => p.Name == Raw).First();
+            product_Raw.ProductId = product.Id;
+            product_Raw.RawId = raw.Id;
+
             if (id != product_Raw.Id)
             {
                 return NotFound();
@@ -122,8 +133,8 @@ namespace Manufacture_ASP.NET_MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", product_Raw.ProductId);
-            ViewData["RawId"] = new SelectList(_context.Raw, "Id", "Id", product_Raw.RawId);
+            ViewData["ProductName"] = new SelectList(_context.Product, "Name", "Name", product.Name);
+            ViewData["RawName"] = new SelectList(_context.Raw, "Name", "Name", raw.Name);
             return View(product_Raw);
         }
 

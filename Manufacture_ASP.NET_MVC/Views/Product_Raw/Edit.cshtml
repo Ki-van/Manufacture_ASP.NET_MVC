@@ -1,12 +1,12 @@
 ﻿@model KP_MANUFACTURE_MVC.Models.Product_Raw
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактирование";
 }
 
-<h1>Edit</h1>
+<h1>Редактирование</h1>
 
-<h4>Product_Raw</h4>
+<h4>Расходы сырья на продукцию</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,17 +24,17 @@
                 <span asp-validation-for="Lost" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProductId" class="control-label"></label>
-                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
-                <span asp-validation-for="ProductId" class="text-danger"></span>
+                <label asp-for="Product" class="control-label"></label>
+                <select asp-for="Product" class="form-control" asp-items="ViewBag.ProductName"></select>
+               
             </div>
             <div class="form-group">
-                <label asp-for="RawId" class="control-label"></label>
-                <select asp-for="RawId" class="form-control" asp-items="ViewBag.RawId"></select>
-                <span asp-validation-for="RawId" class="text-danger"></span>
+                <label asp-for="Raw" class="control-label"></label>
+                <select asp-for="Raw" class="form-control" asp-items="ViewBag.RawName"></select>
+               
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
             </div>
         </form>
     </div>
