@@ -10,23 +10,22 @@ using Manufacture_ASP.NET_MVC.Data;
 
 namespace Manufacture_ASP.NET_MVC.Controllers
 {
-    public class ManufactureController : Controller
+    public class ImporterController : Controller
     {
         private readonly ManufactureContext _context;
 
-        public ManufactureController(ManufactureContext context)
+        public ImporterController(ManufactureContext context)
         {
             _context = context;
         }
 
-        // GET: Manufacture
+        // GET: Importer
         public async Task<IActionResult> Index()
         {
-            var manufactureContext = _context.Manufacture.Include(m => m.Product);
-            return View(await manufactureContext.ToListAsync());
+            return View(await _context.Importer.ToListAsync());
         }
 
-        // GET: Manufacture/Details/5
+        // GET: Importer/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,43 +33,39 @@ namespace Manufacture_ASP.NET_MVC.Controllers
                 return NotFound();
             }
 
-            var manufacture = await _context.Manufacture
-                .Include(m => m.Product)
+            var importer = await _context.Importer
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (manufacture == null)
+            if (importer == null)
             {
                 return NotFound();
             }
 
-            return View(manufacture);
+            return View(importer);
         }
 
-        // GET: Manufacture/Create
+        // GET: Importer/Create
         public IActionResult Create()
         {
-            //ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id");
-            ViewData["ProductName"] = new SelectList(_context.Product, "Name", "Name");
             return View();
         }
 
-        // POST: Manufacture/Create
+        // POST: Importer/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Plan,Complited,Defect,ProductId")] Manufacture manufacture)
+        public async Task<IActionResult> Create([Bind("Id,FullName,Country")] Importer importer)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(manufacture);
+                _context.Add(importer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", manufacture.ProductId);
-            return View(manufacture);
+            return View(importer);
         }
 
-        // GET: Manufacture/Edit/5
+        // GET: Importer/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,23 +73,22 @@ namespace Manufacture_ASP.NET_MVC.Controllers
                 return NotFound();
             }
 
-            var manufacture = await _context.Manufacture.FindAsync(id);
-            if (manufacture == null)
+            var importer = await _context.Importer.FindAsync(id);
+            if (importer == null)
             {
                 return NotFound();
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", manufacture.ProductId);
-            return View(manufacture);
+            return View(importer);
         }
 
-        // POST: Manufacture/Edit/5
+        // POST: Importer/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Plan,Complited,Defect,ProductId")] Manufacture manufacture)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Country")] Importer importer)
         {
-            if (id != manufacture.Id)
+            if (id != importer.Id)
             {
                 return NotFound();
             }
@@ -103,12 +97,12 @@ namespace Manufacture_ASP.NET_MVC.Controllers
             {
                 try
                 {
-                    _context.Update(manufacture);
+                    _context.Update(importer);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ManufactureExists(manufacture.Id))
+                    if (!ImporterExists(importer.Id))
                     {
                         return NotFound();
                     }
@@ -119,11 +113,10 @@ namespace Manufacture_ASP.NET_MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", manufacture.ProductId);
-            return View(manufacture);
+            return View(importer);
         }
 
-        // GET: Manufacture/Delete/5
+        // GET: Importer/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,31 +124,30 @@ namespace Manufacture_ASP.NET_MVC.Controllers
                 return NotFound();
             }
 
-            var manufacture = await _context.Manufacture
-                .Include(m => m.Product)
+            var importer = await _context.Importer
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (manufacture == null)
+            if (importer == null)
             {
                 return NotFound();
             }
 
-            return View(manufacture);
+            return View(importer);
         }
 
-        // POST: Manufacture/Delete/5
+        // POST: Importer/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var manufacture = await _context.Manufacture.FindAsync(id);
-            _context.Manufacture.Remove(manufacture);
+            var importer = await _context.Importer.FindAsync(id);
+            _context.Importer.Remove(importer);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ManufactureExists(int id)
+        private bool ImporterExists(int id)
         {
-            return _context.Manufacture.Any(e => e.Id == id);
+            return _context.Importer.Any(e => e.Id == id);
         }
     }
 }

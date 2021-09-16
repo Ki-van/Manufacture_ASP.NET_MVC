@@ -1,0 +1,48 @@
+﻿@model KP_MANUFACTURE_MVC.Models.Export
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Export</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductCount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProductCount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Product)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Product.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Importer)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Importer.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

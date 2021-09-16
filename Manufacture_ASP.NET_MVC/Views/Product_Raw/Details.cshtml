@@ -1,0 +1,42 @@
+﻿@model KP_MANUFACTURE_MVC.Models.Product_Raw
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Product_Raw</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CostRate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CostRate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Lost)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Lost)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Product)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Product.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Raw)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Raw.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

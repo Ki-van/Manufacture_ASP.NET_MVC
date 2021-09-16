@@ -10,23 +10,23 @@ using Manufacture_ASP.NET_MVC.Data;
 
 namespace Manufacture_ASP.NET_MVC.Controllers
 {
-    public class ManufactureController : Controller
+    public class ExportController : Controller
     {
         private readonly ManufactureContext _context;
 
-        public ManufactureController(ManufactureContext context)
+        public ExportController(ManufactureContext context)
         {
             _context = context;
         }
 
-        // GET: Manufacture
+        // GET: Export
         public async Task<IActionResult> Index()
         {
-            var manufactureContext = _context.Manufacture.Include(m => m.Product);
+            var manufactureContext = _context.Export.Include(e => e.Importer).Include(e => e.Product);
             return View(await manufactureContext.ToListAsync());
         }
 
-        // GET: Manufacture/Details/5
+        // GET: Export/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,43 +34,45 @@ namespace Manufacture_ASP.NET_MVC.Controllers
                 return NotFound();
             }
 
-            var manufacture = await _context.Manufacture
-                .Include(m => m.Product)
+            var export = await _context.Export
+                .Include(e => e.Importer)
+                .Include(e => e.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (manufacture == null)
+            if (export == null)
             {
                 return NotFound();
             }
 
-            return View(manufacture);
+            return View(export);
         }
 
-        // GET: Manufacture/Create
+        // GET: Export/Create
         public IActionResult Create()
         {
-            //ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id");
-            ViewData["ProductName"] = new SelectList(_context.Product, "Name", "Name");
+            ViewData["ImporterId"] = new SelectList(_context.Importer, "Id", "Id");
+            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id");
             return View();
         }
 
-        // POST: Manufacture/Create
+        // POST: Export/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Plan,Complited,Defect,ProductId")] Manufacture manufacture)
+        public async Task<IActionResult> Create([Bind("Id,ProductCount,FullName,Country,ProductId,ImporterId")] Export export)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(manufacture);
+                _context.Add(export);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", manufacture.ProductId);
-            return View(manufacture);
+            ViewData["ImporterId"] = new SelectList(_context.Importer, "Id", "Id", export.ImporterId);
+            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", export.ProductId);
+            return View(export);
         }
 
-        // GET: Manufacture/Edit/5
+        // GET: Export/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,23 +80,24 @@ namespace Manufacture_ASP.NET_MVC.Controllers
                 return NotFound();
             }
 
-            var manufacture = await _context.Manufacture.FindAsync(id);
-            if (manufacture == null)
+            var export = await _context.Export.FindAsync(id);
+            if (export == null)
             {
                 return NotFound();
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", manufacture.ProductId);
-            return View(manufacture);
+            ViewData["ImporterId"] = new SelectList(_context.Importer, "Id", "Id", export.ImporterId);
+            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", export.ProductId);
+            return View(export);
         }
 
-        // POST: Manufacture/Edit/5
+        // POST: Export/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Plan,Complited,Defect,ProductId")] Manufacture manufacture)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductCount,FullName,Country,ProductId,ImporterId")] Export export)
         {
-            if (id != manufacture.Id)
+            if (id != export.Id)
             {
                 return NotFound();
             }
@@ -103,12 +106,12 @@ namespace Manufacture_ASP.NET_MVC.Controllers
             {
                 try
                 {
-                    _context.Update(manufacture);
+                    _context.Update(export);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ManufactureExists(manufacture.Id))
+                    if (!ExportExists(export.Id))
                     {
                         return NotFound();
                     }
@@ -119,11 +122,12 @@ namespace Manufacture_ASP.NET_MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", manufacture.ProductId);
-            return View(manufacture);
+            ViewData["ImporterId"] = new SelectList(_context.Importer, "Id", "Id", export.ImporterId);
+            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", export.ProductId);
+            return View(export);
         }
 
-        // GET: Manufacture/Delete/5
+        // GET: Export/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,31 +135,32 @@ namespace Manufacture_ASP.NET_MVC.Controllers
                 return NotFound();
             }
 
-            var manufacture = await _context.Manufacture
-                .Include(m => m.Product)
+            var export = await _context.Export
+                .Include(e => e.Importer)
+                .Include(e => e.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (manufacture == null)
+            if (export == null)
             {
                 return NotFound();
             }
 
-            return View(manufacture);
+            return View(export);
         }
 
-        // POST: Manufacture/Delete/5
+        // POST: Export/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var manufacture = await _context.Manufacture.FindAsync(id);
-            _context.Manufacture.Remove(manufacture);
+            var export = await _context.Export.FindAsync(id);
+            _context.Export.Remove(export);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ManufactureExists(int id)
+        private bool ExportExists(int id)
         {
-            return _context.Manufacture.Any(e => e.Id == id);
+            return _context.Export.Any(e => e.Id == id);
         }
     }
 }
