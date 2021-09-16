@@ -58,9 +58,19 @@ namespace Manufacture_ASP.NET_MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Plan,Complited,Defect,ProductId")] Manufacture manufacture)
+        public async Task<IActionResult> Create([Bind("Id,Plan,Complited,Defect")] Manufacture manufacture, string Product)
         {
-            if (ModelState.IsValid)
+            var product = _context.Product.Where(p => p.Name == Product).First();
+
+            if (product == null)
+            {
+                return NotFound();
+            } else
+            {
+                manufacture.ProductId = product.Id;
+            }
+
+            if (ModelState.IsValid || manufacture.Plan < manufacture.Complited)
             {
                 _context.Add(manufacture);
                 await _context.SaveChangesAsync();
@@ -83,7 +93,9 @@ namespace Manufacture_ASP.NET_MVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", manufacture.ProductId);
+           
+            string selectedValue = _context.Product.Where(p => p.Id == manufacture.ProductId).First().Name;
+            ViewData["ProductName"] = new SelectList(_context.Product, "Name", "Name", selectedValue);
             return View(manufacture);
         }
 
@@ -92,7 +104,7 @@ namespace Manufacture_ASP.NET_MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Plan,Complited,Defect,ProductId")] Manufacture manufacture)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Plan,Complited,Defect")] Manufacture manufacture, string Product)
         {
             if (id != manufacture.Id)
             {
@@ -103,6 +115,7 @@ namespace Manufacture_ASP.NET_MVC.Controllers
             {
                 try
                 {
+                    manufacture.ProductId = _context.Product.Where(p => p.Name == Product).First().Id;
                     _context.Update(manufacture);
                     await _context.SaveChangesAsync();
                 }
@@ -119,7 +132,7 @@ namespace Manufacture_ASP.NET_MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", manufacture.ProductId);
+            ViewData["ProductName"] = new SelectList(_context.Product, "Name", "Name");
             return View(manufacture);
         }
 

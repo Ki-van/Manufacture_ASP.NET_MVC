@@ -56,11 +56,16 @@ namespace Manufacture_ASP.NET_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,CostPrice,WholesalePrice")] Product product)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid )
             {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (_context.Product.Where(p => p.Name == product.Name).Count() == 0)
+                {
+                    _context.Add(product);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                    ModelState.AddModelError("Name", "Наименование продукта должно быть уникальным");
             }
             return View(product);
         }

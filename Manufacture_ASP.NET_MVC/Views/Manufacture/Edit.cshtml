@@ -1,12 +1,12 @@
 ﻿@model KP_MANUFACTURE_MVC.Models.Manufacture
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактирование";
 }
 
-<h1>Edit</h1>
+<h1>Редактировать</h1>
 
-<h4>Manufacture</h4>
+<h4>Изготовление</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -29,9 +29,8 @@
                 <span asp-validation-for="Defect" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProductId" class="control-label"></label>
-                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
-                <span asp-validation-for="ProductId" class="text-danger"></span>
+                <label asp-for="Product" class="control-label"></label>
+                <select asp-for="Product" class="form-control" asp-items="ViewBag.ProductName"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -41,7 +40,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Вернуться к списку</a>
 </div>
 
 @section Scripts {
