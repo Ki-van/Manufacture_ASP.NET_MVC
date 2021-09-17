@@ -3,14 +3,16 @@ using Manufacture_ASP.NET_MVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Manufacture_ASP.NET_MVC.Migrations
 {
     [DbContext(typeof(ManufactureContext))]
-    partial class ManufactureContextModelSnapshot : ModelSnapshot
+    [Migration("20210917050256_export_complited_prop")]
+    partial class export_complited_prop
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
