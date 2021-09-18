@@ -22,7 +22,7 @@ namespace Manufacture_ASP.NET_MVC.Controllers
         // GET: Export
         public async Task<IActionResult> Index()
         {
-            var manufactureContext = _context.Export.Include(e => e.Importer).Include(e => e.Product);
+            var manufactureContext = _context.Export.Include(e => e.Importer).Include(e => e.Product).Include(e=>e.ComplitedStatus);
             return View(await manufactureContext.ToListAsync());
         }
 
@@ -49,8 +49,9 @@ namespace Manufacture_ASP.NET_MVC.Controllers
         // GET: Export/Create
         public IActionResult Create()
         {
-            ViewData["ImporterId"] = new SelectList(_context.Importer, "Id", "Id");
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id");
+            ViewData["ImporterFullName"] = new SelectList(_context.Importer, "FullName", "FullName");
+            ViewData["ProductName"] = new SelectList(_context.Product, "Name", "Name");
+            ViewData["ComplitedStatusId"] = new SelectList(_context.ComplitedStatus, "Status", "Status");
             return View();
         }
 
@@ -59,8 +60,11 @@ namespace Manufacture_ASP.NET_MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductCount,FullName,Country,ProductId,ImporterId")] Export export)
+        public async Task<IActionResult> Create([Bind("Id,ProductCount,FullName,Country,ComplitedStatusId")] Export export, string Product, string Importer)
         {
+            export.ProductId = _context.Product.Where(p => p.Name == Product).First().Id;
+            export.ImporterId= _context.Importer.Where(p => p.FullName == Importer).First().Id;
+
             if (ModelState.IsValid)
             {
                 _context.Add(export);

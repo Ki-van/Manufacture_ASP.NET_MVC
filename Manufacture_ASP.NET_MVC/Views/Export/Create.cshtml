@@ -17,14 +17,18 @@
                 <input asp-for="ProductCount" class="form-control" />
                 <span asp-validation-for="ProductCount" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group">
-                <label asp-for="ProductId" class="control-label"></label>
-                <select asp-for="ProductId" class ="form-control" asp-items="ViewBag.ProductId"></select>
+                <label asp-for="Product" class="control-label"></label>
+                <select asp-for="Product" class="form-control" asp-items="ViewBag.ProductName"></select>
             </div>
             <div class="form-group">
-                <label asp-for="ImporterId" class="control-label"></label>
-                <select asp-for="ImporterId" class ="form-control" asp-items="ViewBag.ImporterId"></select>
+                <label asp-for="Importer" class="control-label"></label>
+                <select asp-for="Importer" class="form-control" asp-items="ViewBag.ImporterFullName"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplitedStatusId" class="control-label"></label>
+                <select asp-for="ComplitedStatusId" class="form-control" asp-items="ViewBag.ComplitedStatusId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -1,8 +1,100 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model Dictionary<string, long>
+
+@{
+    ViewData["Title"] = "Главная";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Склад</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Продукт
+            </th>
+            <th>
+                Количество
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.Value > 0)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Key)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value)
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<h1>Рейтинг покупателей</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Импортер
+            </th>
+            <th>
+                Страна
+            </th>
+            <th>
+                Сумма покупок
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (KeyValuePair<KP_MANUFACTURE_MVC.Models.Importer, long> item in ViewBag.BestCustomers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Key.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Key.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value)
+                    р
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h1>Нехватка продуктов</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Продукт
+            </th>
+            <th>
+                Нехватка
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (KeyValuePair<KP_MANUFACTURE_MVC.Models.Product, Int64> item in ViewBag.LackOfProduct)
+        {
+            @if (item.Value > 0)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Key.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value)
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

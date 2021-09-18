@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using KP_MANUFACTURE_MVC.Models;
+using Manufacture_ASP.NET_MVC.Models;
 
 namespace Manufacture_ASP.NET_MVC.Data
 {
@@ -25,5 +26,7 @@ namespace Manufacture_ASP.NET_MVC.Data
         public DbSet<KP_MANUFACTURE_MVC.Models.Importer> Importer { get; set; }
 
         public DbSet<KP_MANUFACTURE_MVC.Models.Export> Export { get; set; }
+
+        public DbSet<Manufacture_ASP.NET_MVC.Models.ComplitedStatus> ComplitedStatus { get; set; }
     }
 }

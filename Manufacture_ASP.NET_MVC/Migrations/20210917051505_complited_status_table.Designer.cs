@@ -3,14 +3,16 @@ using Manufacture_ASP.NET_MVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Manufacture_ASP.NET_MVC.Migrations
 {
     [DbContext(typeof(ManufactureContext))]
-    partial class ManufactureContextModelSnapshot : ModelSnapshot
+    [Migration("20210917051505_complited_status_table")]
+    partial class complited_status_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

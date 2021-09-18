@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Manufacture_ASP.NET_MVC.Models; 
 
 namespace KP_MANUFACTURE_MVC.Models
 {
@@ -21,7 +22,11 @@ namespace KP_MANUFACTURE_MVC.Models
         [Display(Name = "ФИО импортера")]
         public virtual Importer Importer { get; set; }
 
+        
+        public string ComplitedStatusId { get; set; }
+        
         [Display(Name = "Выполнено")]
-        public string Complited { get; set; }
+        public virtual  ComplitedStatus ComplitedStatus { get; set; }
+
     }
 }
