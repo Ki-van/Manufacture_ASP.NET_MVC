@@ -1,13 +1,13 @@
 ﻿@model KP_MANUFACTURE_MVC.Models.Manufacture
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Обзор";
 }
 
-<h1>Details</h1>
+<h1>Обзор</h1>
 
 <div>
-    <h4>Manufacture</h4>
+    <h4>Изготовление</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -37,6 +37,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Редактировать</a> |
+    <a asp-action="Index">Вернуться к списку</a>
 </div>

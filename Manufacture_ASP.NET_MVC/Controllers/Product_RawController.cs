@@ -56,7 +56,7 @@ namespace Manufacture_ASP.NET_MVC.Controllers
 
         // POST: Product_Raw/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // For more Details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CostRate,Lost")] Product_Raw product_Raw, string Product, string Raw)
@@ -98,7 +98,7 @@ namespace Manufacture_ASP.NET_MVC.Controllers
 
         // POST: Product_Raw/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // For more Details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,CostRate,Lost")] Product_Raw product_Raw, string Product, string Raw)

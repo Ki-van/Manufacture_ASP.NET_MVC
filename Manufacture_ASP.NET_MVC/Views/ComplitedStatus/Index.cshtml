@@ -21,9 +21,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Status">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Status">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Status">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Status">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.Status">Обзор</a> |
+                <a asp-action="Delete" asp-route-id="@item.Status">Удалить</a>
             </td>
         </tr>
 }
